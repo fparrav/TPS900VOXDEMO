@@ -8,7 +8,7 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button btnPrintPDF417, btncard ;
+    private Button btnPrintPDF417, btncard,btnopencodescan ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +39,19 @@ public class MainActivity extends AppCompatActivity {
                 v.getContext().startActivity(intent);
             }
         });
+
+        btnopencodescan = findViewById(R.id.btnopencodescan);
+
+        btnopencodescan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), CodeScanActivity.class);
+                //           intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                v.getContext().startActivity(intent);
+            }
+        });
+
+
 
 
     }

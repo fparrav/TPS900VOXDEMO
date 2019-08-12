@@ -170,7 +170,7 @@ public class PrintPDF417Activity extends AppCompatActivity {
         }
         Map<EncodeHintType, Object> hints = null;
         // Dimensions dimensions = new Dimensions(18, 18, 1, 150);
-        Dimensions dimensions = new Dimensions(8, 8, 1, 300);
+        Dimensions dimensions = new Dimensions(9, 9, 1, 300);
         int margin = 0;
 
         hints = new EnumMap<>(EncodeHintType.class);

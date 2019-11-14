@@ -8,7 +8,7 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button btnPrintPDF417, btncard,btnopencodescan ;
+    private Button btnPrintPDF417, btncard,btnopencodescan, btnPrintVoucher ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +51,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        btnPrintVoucher = findViewById(R.id.btnPrintVoucher);
 
+        btnPrintVoucher.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), VoucherActivity.class);
+                view.getContext().startActivity(intent);
+            }
+        });
 
 
     }

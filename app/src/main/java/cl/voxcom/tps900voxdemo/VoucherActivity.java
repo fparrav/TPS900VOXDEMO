@@ -102,8 +102,8 @@ public class VoucherActivity extends AppCompatActivity {
 
         wordFont = 1;
         printGray = 5;
-        leftDistance = 2;
-        lineDistance = 4;
+        leftDistance = 4;
+        lineDistance = 0;
 
         btn_printVoucher = findViewById(R.id.btn_printVoucher);
         et_voucher = findViewById(R.id.et_voucher);
@@ -157,6 +157,9 @@ public class VoucherActivity extends AppCompatActivity {
 
         String lineasBoleta[] = voucher.split("\\|");
 
+        printBlankLines(8);
+
+
         for (int n = 0; n < lineasBoleta.length; n++) {
 
             // String buffertext = "";
@@ -171,8 +174,9 @@ public class VoucherActivity extends AppCompatActivity {
                     case "01": {
 
                         int lines = Integer.valueOf(lineasBoleta[n].substring(2, 3));
-                        printBlankLines(lines);
-
+                        if(lines>1) {
+                            printBlankLines(lines - 1);
+                        }
                         if (lineasBoleta[n].length() > 3) {
                             PrintContent(lineasBoleta[n].substring(3));
 
@@ -211,12 +215,10 @@ public class VoucherActivity extends AppCompatActivity {
                         }*/
                         }
 
-                        printBlankLines(4);
 
                         break;
                     }
                     default: {
-
 
                         PrintContent(lineasBoleta[n]);
 
@@ -232,10 +234,13 @@ public class VoucherActivity extends AppCompatActivity {
                     }
                 }
 
+
+                status = true;
             }
 
 
         }
+        printBlankLines(12);
         return status;
     }
 
@@ -246,7 +251,7 @@ public class VoucherActivity extends AppCompatActivity {
             return;
         }
 
-       // paperWalk = data;
+        // paperWalk = data;
 
         if (LowBattery == true) {
             handler.sendMessage(handler.obtainMessage(LOWBATTERY, 1, 0, null));
@@ -264,7 +269,7 @@ public class VoucherActivity extends AppCompatActivity {
     private void PrintBarcode(String barcode) {
 
 
-       // barcodeStr = barcode;
+        // barcodeStr = barcode;
         if (barcode == null || barcode.length() == 0) {
             Toast.makeText(VoucherActivity.this, getString(R.string.empty), Toast.LENGTH_LONG).show();
             return;
@@ -296,7 +301,7 @@ public class VoucherActivity extends AppCompatActivity {
             if (!nopaper) {
                 progressDialog = ProgressDialog.show(VoucherActivity.this, getString(R.string.bl_dy), getString(R.string.printing_wait));
 
-               // printContent = mprintContent;
+                // printContent = mprintContent;
                 handler.sendMessage(handler.obtainMessage(PRINTCONTENT, 1, 0, mprintContent));
 
             } else {
@@ -335,7 +340,7 @@ public class VoucherActivity extends AppCompatActivity {
                     break;
                 case PRINTBARCODE:
 
-                    Thread t2 = new barcodePrintThread((String)msg.obj);
+                    Thread t2 = new barcodePrintThread((String) msg.obj);
                     t2.start();
 
                     try {
@@ -531,9 +536,9 @@ public class VoucherActivity extends AppCompatActivity {
                 if (bitmap != null) {
                     mUsbThermalPrinter.printLogo(bitmap, false);
                 }
-                mUsbThermalPrinter.addString(codigo);
-                mUsbThermalPrinter.printString();
-              //  mUsbThermalPrinter.walkPaper(100);
+                // mUsbThermalPrinter.addString(codigo);
+                // mUsbThermalPrinter.printString();
+                //  mUsbThermalPrinter.walkPaper(100);
             } catch (Exception e) {
                 e.printStackTrace();
                 Result = e.toString();
@@ -614,6 +619,9 @@ public class VoucherActivity extends AppCompatActivity {
                 mUsbThermalPrinter.setAlgin(mUsbThermalPrinter.ALGIN_LEFT);
                 mUsbThermalPrinter.setLeftIndent(leftDistance);
                 mUsbThermalPrinter.setLineSpace(lineDistance);
+              //  mUsbThermalPrinter.setTextSize(64);
+                mUsbThermalPrinter.setMonoSpace(true);
+
                 if (wordFont == 4) {
                     mUsbThermalPrinter.setFontSize(2);
                     mUsbThermalPrinter.enlargeFontSize(2, 2);
